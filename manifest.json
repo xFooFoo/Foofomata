@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "FooFomata",
+  "description": "Twitch Bonus Channel Points Auto-Clicker",
+  "version": "1.0", //version of the extension itself
+  "permissions": ["activeTab", "scripting"],
+  "action": {
+    //"default_popup": "pop_up.html", - this will override any on-click event
+    "default_icon": "images/koala-icon-128.png"
+  },
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "icons": {
+    "16": "images/koala-icon-16.png",
+    "32": "images/koala-icon-32.png",
+    "48": "images/koala-icon-48.png",
+    "128": "images/koala-icon-128.png"
+  },
+  /* Hotkeys to activate the extension */
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+B",
+        "mac": "Command+B"
+      }
+    }
+  }
+}
