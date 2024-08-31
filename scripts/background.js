@@ -28,16 +28,21 @@ chrome.action.onClicked.addListener(async (tab) => {
     console.log("Badge text set to:", nextState);
 
     if (nextState === "ON") {
-        // Insert auto button-click scripts
-        await chrome.scripting.executeScript({
-          target : { tabId : tab.id},
-          files : [ "scripts/rain.js" ],
-        })/* .then(() => console.log("script injected")); */
+      // Insert auto button-click scripts
+      await chrome.scripting.executeScript({
+        target : { tabId : tab.id},
+        files : [ "scripts/rain.js" ],
+      })/* .then(() => console.log("script injected")); */
 
-        await chrome.scripting.executeScript({
-          target : { tabId : tab.id},
-          files : [ "scripts/collectChannelPoints.js" ],
-        })
+      await chrome.scripting.executeScript({
+        target : { tabId : tab.id},
+        files : [ "scripts/collectChannelPoints.js" ],
+      })
     } 
+    else if (nextState === "OFF") {
+      // Send a message to the scripts to stop the intervals
+      chrome.tabs.sendMessage(tab.id, { action: 'STOP_RAIN' });
+      chrome.tabs.sendMessage(tab.id, { action: 'STOP_CHANNEL_POINTS' });
+    }
   }
 });

@@ -16,6 +16,22 @@ function collectRain() {
 	}
 }
 
+function clearRainInterval() {
+  if (collectRainId) {
+    clearInterval(collectRainId);
+    collectRainId = null;
+    console.log('Rain Interval Cleared');
+  }
+}
+
+// Listen for messages to clear the interval
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === 'STOP_RAIN') {
+    clearRainInterval();
+    sendResponse({ status: 'Rain Interval Cleared' });
+  }
+});
+
 var collectRainId = setInterval(collectRain, 15000); //every 15s
 
 // if you want to stop the interval without refreshing the webpage

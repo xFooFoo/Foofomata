@@ -18,6 +18,22 @@ function collectChannelPoints() {
 	}
 }
 
+function clearChannelPointsInterval() {
+  if (collectChannelPointsId) {
+    clearInterval(collectChannelPointsId);
+    collectChannelPointsId = null;
+    console.log('Channel Points Interval Cleared');
+  }
+}
+
+// Listen for messages to clear the interval
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === 'STOP_CHANNEL_POINTS') {
+    clearChannelPointsInterval();
+    sendResponse({ status: 'Channel Points Interval Cleared' });
+  }
+});
+
 var collectChannelPointsId = setInterval(collectChannelPoints, 15000); //every 15s
 
 // if you want to stop the interval without refreshing the webpage
